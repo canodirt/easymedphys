@@ -1,0 +1,13 @@
+<h1>{{ organization.name }}</h1>
+
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{ % if events %}
+    <ul>
+        {% for eventGroup in events %}
+            <li><a href="{% url {{organization.urlshort}}/'cme:event' &}"{{ eventGroup.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No events for this organization.</p>
+{% endif %}

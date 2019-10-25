@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{event.organization.name}}:{{event.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+Organizations
+{% endblock %}
+
+{% block content %}
+
+{% if organization_list %}
+    <ul>
+    {% for organization in organization_list %}
+        <li><a href="{% url 'cme:events' organization.urlshort %}">{{ organization.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No organizations available.</p>
+{% endif %}
+
+{% endblock %}

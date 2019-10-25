@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<center><h1>{{session.event.organization.name}}</h1><h2>{{session.event.name}}<br>SAM Questions</h2></center>
+
+<form action="{% url 'cme:samQuestion' session.pk %}" method="post">
+    {% csrf_token %}
+        {{ formset.management_form|crispy }}
+
+
+
+
+    {% for form in formset.forms %}{% for question in question_list %}
+    {% if forloop.counter == forloop.parentloop.counter %}
+        <h3><b>{{question.question_text}}</b></h3><br>
+
+        {{ form|crispy }}
+        <hr color="black" size=5>
+    {% endif %}
+
+    {% endfor %} {% endfor %}
+
+
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+{% endblock %}

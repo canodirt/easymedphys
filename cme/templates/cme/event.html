@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+{{event.organization.name}}:{{event.name}}
+{% endblock %}
+{% block breadcrumb %}
+<h1>{{event.organization.name}}: {{ event.name }}</h1>
+
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<button onclick="window.location.href = '{% url 'cme:event_evaluation' event.urlshort %}';">Evaluation Event</button>
+<button onclick="window.location.href = '{% url 'cme:speaker_evaluations_all' event.urlshort %}';">Evaluate all Presentations Together</button>
+
+{% else %}
+<h2><b>Login to see event evaluation options</b></h2><br><br>
+{% endif %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if session_Dates %}
+{% for sessionDate in session_Dates %}
+<h1>{{ sessionDate.actualDate }}</h1>
+    <table style="width:100%">
+      <tr>
+        <th>Time</th>  
+        <th>Presenter</th>
+        <th>Title</th>
+        {% if user.is_authenticated %}<th>Evaluations</th>{% endif %}
+      </tr>
+
+
+        {% for session in sessionDate.session_list %}
+        <tr>
+            <td>{{session.session_time}}</td>
+            <td>{{ session.presenter.last_name }}, {{ session.presenter.first_name }}</td>
+            <td>{{ session.title }}</td>
+            {% if user.is_authenticated %} <td> {% if session.session_happened %}
+            <button onclick="window.location.href = '{% url 'cme:session_evaluation' session.pk %}';">Evaluate</button> {% if session.isSAM %} <button onclick="window.location.href =  '{% url 'cme:samQuestion' session.pk %}';">SAM Questions</button> {% endif %}{% endif %}  </td>{% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+{% endfor %}
+
+
+{% else %}
+    <p>No events for this organization.</p>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+{{organization.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+<h1>{{ organization.name }}: Events</h1>
+{% endblock %}
+{% block content %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if events %}
+    <ul>
+        {% for eventGroup in events %}
+        <li><a href="{% url 'cme:event_sessions' eventGroup.urlshort %}">{{ eventGroup.name }}</a></li>
+
+
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No events for this organization.</p>
+{% endif %}
+
+{% endblock %}

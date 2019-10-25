@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{event.organization.name}}:{{event.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active"><a href="{% url 'cme:event_sessions' event.urlshort %}">{{event.organization.name}}-{{event.name}}</a></li>
+{% endblock %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<center><h2><br>Evaluation Form</h2></center>
+
+<form action="{% url 'cme:event_evaluation' event.urlshort %}" method="post">
+    {% csrf_token %}
+
+    {{ form|crispy }}
+    {{ form.errors }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+{% endblock %}

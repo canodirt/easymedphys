@@ -1,0 +1,35 @@
+<style>
+    ul {list-style-type:none}
+
+</style>
+
+{% extends 'base.html' %}
+
+{% block title %}
+SAM QUESTION
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <h3><b>{{thisquestion.question_text}}</b></h3><br>
+
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<form action="{% url 'cme:samQuestion' session.pk %}" method="post">
+    {% csrf_token %}
+
+
+    {{ form }}
+    {{ form.errors }}
+
+
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+{% endblock %}
